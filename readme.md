@@ -18,5 +18,5 @@ Constructing the permutations of a set is O(n!). In order to keep the algorithm 
 
 # Demo
 
-![alt text]https://raw.githubusercontent.com/Desertification/Scrabble-anagram-generator/master/demo.gif)
+![alt text](https://raw.githubusercontent.com/Desertification/Scrabble-anagram-generator/master/demo.gif)
 
