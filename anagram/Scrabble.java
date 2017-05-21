@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * <p>
  * Contains utility functions for scrabble game logic
  */
-class Scrabble { // not final unlike utility classes, scrabble rules can depend on locale, inheritance should be allowed
+public class Scrabble { // not final unlike utility classes, scrabble rules can depend on locale, inheritance should be allowed
 	private Scrabble() {
 	}
 
@@ -19,14 +19,15 @@ class Scrabble { // not final unlike utility classes, scrabble rules can depend 
 	public static final short MIN_WORD_LENGTH = 2;
 
 	// https://en.wikipedia.org/wiki/Scrabble_letter_distributions
-	public static final short[] POINT_DISTRIBUTION = {
+	private static final short[] POINT_DISTRIBUTION = {
 			1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10
 	};
-	public static final short[] LETTER_DISTRIBUTION = {
+	private static final short[] LETTER_DISTRIBUTION = {
 			9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1
 	};
 
 	// todo probably way to heavy for just class initialisation, but who h*cking cares
+	// todo but it might be garbage collected when the class unloads, hmmm...
 	public static final Set<String> VALID_WORDS_SET = Collections.unmodifiableSet(loadWords());
 	public static final NavigableSet<String> VALID_WORDS_TREE = Collections.unmodifiableNavigableSet(
 			new TreeSet<>(VALID_WORDS_SET));
@@ -112,16 +113,5 @@ class Scrabble { // not final unlike utility classes, scrabble rules can depend 
 		Stream<String> stream = new BufferedReader(new InputStreamReader(inputStream)).lines();
 		// fixme: expects a clean formatted text file, no cleanup is done, only a filter to remove the readme part
 		return stream.filter(Scrabble::isCorrectLength).collect(Collectors.toSet());
-	}
-
-	/**
-	 * only for testing
-	 * @param args
-	 */
-	public static void main(String[] args) { //todo remove main
-		Benchmark.test_ms(Scrabble::loadWords);
-		Benchmark.test_ms(() -> isValidSet("asdasdasd"));
-		Benchmark.test_ms(() -> new TreeSet<>(VALID_WORDS_SET));
-		System.out.println(Scrabble.VALID_WORDS_SET.size());
 	}
 }
