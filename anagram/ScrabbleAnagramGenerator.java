@@ -8,7 +8,7 @@ public class ScrabbleAnagramGenerator {
 	private String set;
 	private int wildcardCount;
 	private SortedSet<String> sets = new TreeSet<>();
-	private ArrayList<String> anagrams = new ArrayList<>();
+	private Set<String> anagrams = new HashSet<>();
 
 	private ScrabbleAnagramGenerator(String set, int wildcardCount) {
 		this.set = set;
@@ -24,8 +24,9 @@ public class ScrabbleAnagramGenerator {
 		for (String s : scrabbleAnagramGenerator.sets) {  // fixme: this is scandalously inefficient
 			scrabbleAnagramGenerator.permutation(s);
 		}
-		scrabbleAnagramGenerator.anagrams.sort(new ScrabbleComparator().reversed());
-		return scrabbleAnagramGenerator.anagrams;
+		ArrayList<String> sortedAnagrams = new ArrayList<>(scrabbleAnagramGenerator.anagrams);
+		sortedAnagrams.sort(new ScrabbleComparator().reversed());
+		return sortedAnagrams;
 	}
 
 	private static void validateInput(String set, int wildcardCount) {
